@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>restful风格的API</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style type="text/css">
+        .container {
+
+            padding-top: 15px;
+        }
+
+        .form-control {
+            width: 30%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+    </div>
+    <script src="../js/ajax.js"></script>
+    <script>
+        /*  获取用户列表信息 */
+        $.ajax({
+            type: 'get',
+            url: '/users',
+            success: function (response) {
+                console.log(response)
+            },
+        })
+        /*  获取用户信息 */
+        $.ajax({
+            type: 'get',
+            url: '/users/1',
+            success: function (response) {
+                console.log(response)
+            },
+        })
+        /*  删除用户信息 */
+        $.ajax({
+            type: 'delete',
+            url: '/users/1',
+            success: function (response) {
+                console.log(response)
+            },
+        })
+        /*  修改用户信息 */
+        $.ajax({
+            type: 'put',
+            url: '/users/1',
+            success: function (response) {
+                console.log(response)
+            },
+        })
+    </script>
+
+
+</body>

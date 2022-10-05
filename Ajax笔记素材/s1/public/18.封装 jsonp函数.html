@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">点我发送请求</button>
+    <script>
+        // function fn2(data) {
+        //     console.log('客户端的fn2函数被调用了');
+        //     console.log(data);
+        // }
+    </script>
+    <script src="./js/jsonp.js"></script>
+    <script>
+        // 获取按钮
+        var btn = document.getElementById('btn');
+        // 为按钮添加点击事件
+        btn.onclick = function () {
+            jsonp({
+                // 请求地址
+                url: 'http://localhost:3001/better',
+                success: function (data) {
+                    console.log(123);
+                    console.log(data);
+                }
+            })
+        }
+        // function jsonp(options) {
+        //     // 动态创建script标签
+        //     var script = document.createElement('script');
+        //     // 它已经不是一个全局函数了
+        //     // 我们要想办法将它变成全部函数
+        //     window.fn = options.success;
+        //     // 为 script 标签添加 src 属性
+        //     script.src = options.url + '?callback=fn';
+        //     // 将 script 便签追加到页面中
+        //     document.body.appendChild(script);
+        //     // 为 script 标签添加 onload事件
+        //     script.onload = function () {
+        //         document.body.removeChild(script);
+        //     }
+        // }
+
+    </script>
+</body>
+
+</html>

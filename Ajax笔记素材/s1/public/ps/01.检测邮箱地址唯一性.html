@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>验证邮箱地址是否已经注册</title>
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/dist/css/bootstrap.css"> -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        p:not(:empty) {
+            padding: 15px;
+            width: 50%;
+        }
+
+        .container {
+            padding-top: 100px;
+        }
+
+        .form-control {
+            width: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-group">
+            <label for="">邮箱地址</label>
+            <input type="email" class="form-control" placeholder="请输入邮箱地址" id="email">
+        </div>
+        <!-- 错误 bg-danger 正确 bg-success -->
+        <p id="info"></p>
+    </div>
+    <!-- 引入封装好的ajax -->
+    <script src="../js/ajax.js"></script>
+    <script>
+        // 获取页面中的元素
+        var emailInp = document.getElementById('email')
+        var info = document.getElementById('info');
+        // 注册离开焦点事件
+        emailInp.onblur = function () {
+            // 获取用户输入的邮箱地址
+            var email = this.value;
+            // 验证邮箱地址的正则表达式
+            var reg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+            // 如果用户输入的邮箱地址不符合规则
+            if (!reg.test(email)) {
+                // 给出用户提示
+                info.innerHTML = '请输入符合规则的邮箱地址';
+                // 让提示信息显示为错误信息的样式
+                info.className = 'bg-danger';
+                // 阻止程序向下执行
+                return;
+            }
+            // 若邮箱地址格式正确，则进一步向服务器端发送请求
+            ajax({
+                // 请求方式
+                type: 'get',
+                // 请求地址
+                url: 'http://localhost:3000/verifyEmailAdress',
+                // 请求参数
+                data: {
+                    email: email
+                },
+                success: function (result) {
+                    console.log(result);
+                    // 将message对应的信息添加到p便签中
+                    info.innerHTML = result.message;
+                    // 添加p标签的类名为 bg-success
+                    info.className = 'bg-success';
+                },
+                error: function (result) {
+                    console.log(result);
+                    info.innerHTML = result.message;
+                    info.className = 'bg-danger';
+                },
+            });
+        }
+    </script>
+</body>
+
+</html>

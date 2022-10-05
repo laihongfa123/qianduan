@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 创建普通的html表单 -->
+    <form id="form">
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type="button" value="提交" id="btn">
+    </form>
+    <script type="text/javascript" src="./js/ajax.js"></script>
+    <script>
+        // 获取按钮
+        var btn = document.getElementById('btn');
+        // 获取表单
+        var form = document.getElementById('form');
+        // 为按钮添加点击事件
+        btn.onclick = function () {
+            console.log(1)
+            // 将普通的html表单转换为表单对象
+            var formData = new FormData(form);
+            // console.log(formData)
+            // get('key') 获取表单对象属性的值
+            console.log(formData.get('username'));
+            // 如果设置的表单属性存在，会替换原来的表单属性值
+            formData.set('username', '张三');
+            // 如果设置的表单属性不存在，将会创建这个表单属性
+            formData.set('age', 20);
+            // 删除用户输入的密码
+            formData.delete('password');
+            // 向表单中追加属性值
+            formData.append('hobby', '编程')
+            // 如果表单属性已存在，会多值共存
+            formData.append('username', '李四');
+            ajax({
+                url: 'http://localhost:3000/formData',
+                type: 'post',
+                data: formData,
+                processData: false,//不处理数据
+                contentType: false,//不使用默认请求头
+                success: function (result) {
+                    console.log(result);
+                }
+            })
+        }      
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 函数定义在全局作用域，script标签的前面
+        // data 是形参，实参是我们在服务器端定义的对象
+        function fn(data) {
+            console.log('客户端的fn函数被调用了');
+            console.log(data);
+        }
+    </script>
+    <!-- 1.将非同源服务器端的请求地址写在script标签的src属性中 -->
+    <!-- 现在我们需要在请求地址的后面加上请求参数：函数名称 -->
+    <!-- 到了服务器端需要通过请求参数来接收函数名称 -->
+    <script src="http://localhost:3001/better?callback=fn"></script>
+</body>
+
+</html>

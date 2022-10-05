@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>get/post</title>
+</head>
+
+<body>
+    <button id="btn">点我发送请求</button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $('#btn').on('click', function () {
+            $.get('/base', { name: 'zhangsan', age: 18 }, function (response) {
+                console.log(response)
+            });
+            $.post('/base', { name: 'lisi', age: 18 }, function (response) {
+                console.log(response)
+            });
+        })
+    </script>
+</body>
+
+</html>

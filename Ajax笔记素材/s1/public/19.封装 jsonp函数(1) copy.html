@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn1">点我发送请求1</button>
+    <button id="btn2">点我发送请求2</button>
+    <script src="./js/jsonp.js"></script>
+
+    <script>
+        // 获取按钮
+        var btn1 = document.getElementById('btn1');
+        var btn2 = document.getElementById('btn2');
+        // 为按钮添加点击事件
+        btn1.onclick = function () {
+            jsonp({
+                // 请求地址
+                url: 'http://localhost:3001/better1',
+                // data对象：向服务器端发送的请求参数
+                data: {
+                    name: 'lisi',
+                    age: 30
+                },
+                success: function (data) {
+                    console.log(123);
+                    console.log(data);
+                }
+            })
+        }
+
+        btn2.onclick = function () {
+            jsonp({
+                // 请求地址
+                url: 'http://localhost:3001/better1',
+                success: function (data) {
+                    console.log(456789);
+                    console.log(data);
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/dist/css/bootstrap.min.css"> -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        .container {
+            padding-top: 60px;
+        }
+
+        .padding {
+            padding: 5px 0 20px 0;
+        }
+
+        .btn {
+            margin-top: 10px;
+        }
+
+        .progress {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-group">
+            <label>请选择文件</label>
+            <input type="file" id="file">
+            <button type="button" class="btn btn-primary">上传</button>
+            <div class="padding" id="box">
+                <!-- <img src="" class="img-rounded img-responsive"> -->
+            </div>
+            <div class="progress">
+                <div class="progress-bar" style="width: 0%;" id="bar">0%</div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./js/ajax.js"></script>
+    <script>
+        // 获取文件选择控件
+        var file = document.getElementById('file');
+        //获取上传按钮
+        var btn = document.querySelector('.btn')
+        // 获取进度条元素
+        var bar = document.getElementById('bar');
+        // 获取图片容器
+        var box = document.getElementById('box');
+        btn.onclick = function () {
+            // 创建空的formdata表单对象
+            var formData = new FormData();
+            // 将用户选择的文件追加到formData表单对象中
+            // files属性是一个集合
+            console.log(file.files.length)
+            formData.append('img', file.files[0]);
+            if (file.files.length === 0) return alert('上传文件不能为空');
+            const callback = (xhr) => {
+                xhr.upload.onprogress = function (ev) {
+                    // ev 是事件对象
+                    // console.log(ev);
+                    // ev.loaded : 文件已经上传了多少
+                    // ev.total : 文件上传总大小
+                    var result = (ev.loaded / ev.total).toFixed(2) * 100 + '%';
+                    // 设置进度条的宽度
+                    bar.style.width = result;
+                    // 将百分比显示在进度条中
+                    bar.innerHTML = result;
+                }
+            }
+            const success = (data, xhr) => {
+                console.log(data);
+                let img = document.createElement('img');
+                img.style.width = '150px';
+                // 给图片标签设置 src属性
+                img.src = data.path;
+                // 当图片加载完成后
+                img.onload = function () {
+                    // ‘将图片显示在页面中
+                    box.appendChild(img);
+                }
+            }
+            ajax({
+                url: 'http://localhost:3000/upload',
+                type: 'post',
+                data: formData,
+                processData: false,//不处理数据
+                contentType: false,//不使用默认请求头
+                callback: callback,//获取ajax对象函数
+                success: success
+            })
+        }
+    </script>
